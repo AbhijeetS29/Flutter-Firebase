@@ -1,5 +1,6 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:firstyy_y/SplashScreen.dart';
+import 'package:firstyy_y/homePage.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -41,14 +42,12 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         // Centered title in the app bar
-        title: Center(
-          child: Text(
-            "App Name", // Replace with your app name
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w400,
-            ),
+        title: Text(
+          "App Name", // Replace with your app name
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w400,
           ),
         ),
         automaticallyImplyLeading: false, // Hide back button
@@ -83,13 +82,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     height: 50,
                   ),
                   Center(
-                    child: Text(
-                      "Hello World",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                      ),
+                    child: ElevatedButton(onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> First()));
+                    }, child: Text("hello World"),
                     ),
                   ),
                 ],
