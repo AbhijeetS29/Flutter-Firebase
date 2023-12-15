@@ -39,5 +39,12 @@ class _SplashState extends State<Splash> {
     );
   }
 }
+// class AnimatedSplash extends StatelessWidget{
+//   @override
+//   Widget build(BuildContext context) {
+//    return Sup
+//   }
+//
+// }
 
 
