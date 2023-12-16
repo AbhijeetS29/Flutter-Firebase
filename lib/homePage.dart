@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'Book.dart';
 import 'package:firstyy_y/bookFlip.dart';
 import 'listAnimated.dart';
+import 'curl.dart';
 
 class First extends StatefulWidget {
   @override
@@ -54,7 +55,7 @@ class _FirstState extends State<First> {
               // Add your action here when the container is tapped
               print('Container tapped!');
               // You can navigate to a new screen or perform any action here
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> BookPageTurnAnimation()));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> PageCurlScreen()));
             },
             child: Container(
               margin: EdgeInsets.only(top: 20, left: 20), // Adding margin from top and left
@@ -70,7 +71,7 @@ class _FirstState extends State<First> {
             onTap: () {
               // Add your action here when the container is tapped
               print('Container tapped!');
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> BookPageCurl()));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> BookFlipAnimation()));
               // You can navigate to a new screen or perform any action here
             },
             child: Container(
