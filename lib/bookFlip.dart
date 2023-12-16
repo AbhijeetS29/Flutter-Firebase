@@ -167,9 +167,10 @@ class _BookPageCurlState extends State<BookPageCurl>
   int _currentPage = 0;
 
   List<String> _imageList = [
-    'assets/image1.jpg', // Replace these with your image paths
-    'assets/image2.jpg',
-    'assets/image3.jpg',
+    'assets/images/firstpic.jpg', // Replace these with your image paths
+    'assets/images/second.jpg',
+    'assets/images/firstpic.jpg', // Replace these with your image paths
+    'assets/images/second.jpg',
     // Add more image paths as needed
   ];
 
@@ -261,8 +262,8 @@ class PageCurlPainter extends CustomPainter {
     final img = Image.asset(
       image,
       fit: BoxFit.cover,
-      width: size.width.toInt(),
-      height: size.height.toInt(),
+      width: size.width.toDouble(),
+      height: size.height.toDouble(),
     );
 
     img.image.resolve(ImageConfiguration()).addListener(
@@ -286,4 +287,5 @@ class PageCurlPainter extends CustomPainter {
     return true;
   }
 }
+
 
