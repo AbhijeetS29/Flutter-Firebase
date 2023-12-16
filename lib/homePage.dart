@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'Book.dart';
+import 'package:firstyy_y/bookFlip.dart';
 
 class First extends StatefulWidget {
   @override
@@ -68,6 +69,7 @@ class _FirstState extends State<First> {
             onTap: () {
               // Add your action here when the container is tapped
               print('Container tapped!');
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> BookFlipAnimation()));
               // You can navigate to a new screen or perform any action here
             },
             child: Container(
