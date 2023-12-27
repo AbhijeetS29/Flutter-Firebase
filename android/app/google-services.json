@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "431568993863",
-    "project_id": "flutterfirst-16da3",
-    "storage_bucket": "flutterfirst-16da3.appspot.com"
+    "project_number": "581733578471",
+    "project_id": "firstflutterfirebase-bc68c",
+    "storage_bucket": "firstflutterfirebase-bc68c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:431568993863:android:4c6b6ed12589a22a3a3b62",
+        "mobilesdk_app_id": "1:581733578471:android:1e9917012dd87b25591442",
         "android_client_info": {
           "package_name": "com.example.firstyy_y"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDKYYvy6zvxuvpeZxS3WBU0WCbBVQVkKTw"
+          "current_key": "AIzaSyCaXhAe2N0_gfNmZVJfR0N9XlwYmVOTs1c"
         }
       ],
       "services": {

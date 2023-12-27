@@ -12,13 +12,13 @@ class List extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('List View'),
+        title: Text('Lafz Lafz Masoom'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListWheelScrollView(
           itemExtent: 100,
-          children: texts.map((text) {
+          children: texts.map((texts) {
             return Container(
               width: double.infinity,
               decoration: BoxDecoration(
@@ -27,7 +27,7 @@ class List extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  text,
+                  texts,
                   style: TextStyle(fontSize: 20),
                 ),
               ),
