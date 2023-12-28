@@ -48,6 +48,7 @@ dependencies:
   image_picker: ^1.0.5
   toast:
   cached_network_image:
+  basic_utils: ^5.7.0
 
 dev_dependencies:
   flutter_test:

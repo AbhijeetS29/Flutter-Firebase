@@ -5,8 +5,18 @@ import 'package:firstyy_y/IMages.dart';
 import 'package:firstyy_y/SplashScreen.dart';
 import 'package:firstyy_y/firebase_options.dart';
 import 'package:firstyy_y/homePage.dart';
+import 'package:firstyy_y/main.dart';
+import 'package:firstyy_y/trying.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'dart:io';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+// import 'package:photo_view/photo_view.dart';
+// import 'package:photo_view/photo_view_gallery.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -234,3 +244,205 @@ class Btry extends StatelessWidget {
   }
 }
 
+
+
+
+
+class ImageUploadScreen extends StatefulWidget {
+  @override
+  _ImageUploadScreenState createState() => _ImageUploadScreenState();
+}
+
+class _ImageUploadScreenState extends State<ImageUploadScreen> {
+  final picker = ImagePicker();
+  File? _pickedImage;
+
+  Future<void> _pickImage() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        _pickedImage = File(pickedFile.path);
+      });
+    } else {
+      print('No image selected.');
+    }
+  }
+
+  Future<void> _uploadImage() async {
+    if (_pickedImage != null) {
+      String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+
+      firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance
+          .ref()
+          .child('images')
+          .child('$fileName.jpg');
+
+      await ref.putFile(_pickedImage!);
+      print('Image uploaded to Firebase Storage.');
+    } else {
+      print('Please select an image first.');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Image Upload'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _pickedImage != null
+                ? Image.file(
+              _pickedImage!,
+              height: 200,
+            )
+                : Text('No image selected'),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _pickImage,
+              child: Text('Select Image'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _uploadImage,
+              child: Text('Upload Image'),
+            ),ElevatedButton(
+              onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> ImageGalleryScreen()));
+              },
+              child: Text('ret Image'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// class ImageRetrieveScreen extends StatefulWidget {
+//   @override
+//   _ImageRetrieveScreenState createState() => _ImageRetrieveScreenState();
+// }
+//
+// class _ImageRetrieveScreenState extends State<ImageRetrieveScreen> {
+//   List<String> _imageUrls = []; // List to store image URLs
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//     _retrieveImageUrls();
+//   }
+//
+//   Future<void> _retrieveImageUrls() async {
+//     firebase_storage.ListResult result =
+//     await firebase_storage.FirebaseStorage.instance.ref('images').listAll();
+//
+//     List<firebase_storage.Reference> allImages = result.items;
+//
+//     for (var imageRef in allImages) {
+//       String downloadURL = await imageRef.getDownloadURL();
+//       setState(() {
+//         _imageUrls.add(downloadURL);
+//       });
+//     }
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Image Retrieval'),
+//       ),
+//       body: GridView.builder(
+//         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+//           crossAxisCount: 2,
+//           crossAxisSpacing: 4.0,
+//           mainAxisSpacing: 4.0,
+//         ),
+//         itemCount: _imageUrls.length,
+//         itemBuilder: (BuildContext context, int index) {
+//           return Image.network(
+//             _imageUrls[index],
+//             fit: BoxFit.cover,
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
+// class ImageGalleryScreen extends StatefulWidget {
+//   @override
+//   _ImageGalleryScreenState createState() => _ImageGalleryScreenState();
+// }
+//
+// class _ImageGalleryScreenState extends State<ImageGalleryScreen> {
+//   List<String> _imageUrls = []; // List to store image URLs
+//   int _currentIndex = 0;
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//     _retrieveImageUrls();
+//   }
+//
+//   Future<void> _retrieveImageUrls() async {
+//     firebase_storage.ListResult result =
+//     await firebase_storage.FirebaseStorage.instance.ref('images').listAll();
+//
+//     List<firebase_storage.Reference> allImages = result.items;
+//
+//     for (var imageRef in allImages) {
+//       String downloadURL = await imageRef.getDownloadURL();
+//       setState(() {
+//         _imageUrls.add(downloadURL);
+//       });
+//     }
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Image Gallery'),
+//       ),
+//       body: _imageUrls.isEmpty
+//           ? Center(child: CircularProgressIndicator())
+//           : Container(
+//         child: PhotoViewGallery.builder(
+//           itemCount: _imageUrls.length,
+//           builder: (BuildContext context, int index) {
+//             return PhotoViewGalleryPageOptions(
+//               imageProvider: NetworkImage(_imageUrls[index]),
+//               minScale: PhotoViewComputedScale.contained,
+//               maxScale: PhotoViewComputedScale.covered * 2,
+//               heroAttributes: PhotoViewHeroAttributes(tag: index),
+//             );
+//           },
+//           onPageChanged: (int index) {
+//             setState(() {
+//               _currentIndex = index;
+//             });
+//           },
+//           pageController: PageController(initialPage: _currentIndex),
+//           enableRotation: true,
+//           scrollPhysics: const BouncingScrollPhysics(),
+//           backgroundDecoration: BoxDecoration(color: Colors.black),
+//             loadingBuilder: (context, event) {
+//               double progress = 0.0;
+//               if (event != null && event.expectedTotalBytes != null) {
+//                 progress = event.cumulativeBytesLoaded / (event.expectedTotalBytes ?? 1);
+//               }
+//               return Center(
+//                 child: CircularProgressIndicator(value: progress),
+//               );
+//             },
+//
+//         ),
+//       ),
+//     );
+//   }
+// }
