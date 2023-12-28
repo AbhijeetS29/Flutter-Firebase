@@ -42,6 +42,12 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_core: ^2.24.2
   firebase_database: ^10.3.8
+  firebase_storage:
+  permission_handler:
+#  firebase_storage: ^10.2.7
+  image_picker: ^1.0.5
+  toast:
+  cached_network_image:
 
 dev_dependencies:
   flutter_test:

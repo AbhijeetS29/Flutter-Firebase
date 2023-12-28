@@ -1,10 +1,18 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firstyy_y/IMages.dart';
 import 'package:firstyy_y/SplashScreen.dart';
+import 'package:firstyy_y/firebase_options.dart';
 import 'package:firstyy_y/homePage.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -24,7 +32,7 @@ class MyApp extends StatelessWidget {
           splash: Icons.home,
           splashTransition: SplashTransition.slideTransition,
            pageTransitionType: PageTransitionType.bottomToTop,
-        nextScreen: MyHomePage(title: 'Splash Screen',),
+        nextScreen: ImageUploadScreen(),
         backgroundColor: Colors.blue));
   }
 }
@@ -179,4 +187,50 @@ class _MyHomePageState extends State<MyHomePage> {
 //
 //     );
 //   }
-// }
+// }// Import the Firebase Database package
+
+class Btry extends StatelessWidget {
+  const Btry({Key? key, required String title}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final TextEditingController _textController = TextEditingController(); // Controller to manage text input
+
+    void addToFirebase(String text) {
+      // Get a reference to the database
+      DatabaseReference databaseReference = FirebaseDatabase.instance.reference();
+
+      // Push the entered text to a specific node in the database
+      databaseReference.child('userInputs').push().set({
+        'inputText': text,
+        'timestamp': DateTime.now().millisecondsSinceEpoch,
+      });
+    }
+
+    return Scaffold(
+      body: Column(
+        children: [
+          TextField(
+            controller: _textController,
+            decoration: InputDecoration(
+              labelText: 'Enter your text',
+              hintText: 'Type something here',
+              prefixIcon: Icon(Icons.person),
+              border: OutlineInputBorder(),
+            ),
+          ),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              String enteredText = _textController.text;
+              addToFirebase(enteredText);
+              _textController.clear(); // Clear the text field after adding to Firebase
+            },
+            child: Text('Add to Firebase'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
