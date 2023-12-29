@@ -628,7 +628,6 @@ class ImageGalleryScreen extends StatefulWidget {
 
 class _ImageGalleryScreenState extends State<ImageGalleryScreen> {
   List<String> _imageUrls = [];
-  List<String> _imageNames = [];
   List<String> _displayNames = [
     "दूर जाना है हमको",
     "मै पूजूं तुझको",
@@ -654,13 +653,9 @@ class _ImageGalleryScreenState extends State<ImageGalleryScreen> {
 
     for (var imageRef in allImages) {
       String downloadURL = await imageRef.getDownloadURL();
-      String imageName = imageRef.name;
-
-      // Add original image name to _imageNames
-      _imageNames.add(imageName);
 
       // Use your logic here to set the desired display name
-      String displayName = _getDisplayName(imageName); // Implement your logic to change the name
+      String displayName = _getDisplayName(imageRef.name);
 
       setState(() {
         _imageUrls.add(downloadURL);

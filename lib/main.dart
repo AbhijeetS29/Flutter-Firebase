@@ -637,6 +637,90 @@ class _BookFlipAnimationState extends State<BookFlipAnimation> {
 //   }
 // }
 
+class ImageListScreen extends StatelessWidget {
+  final List<String> _displayNames = [
+    "दूर जाना है हमको",
+    "मै पूजूं तुझको",
+    // ... (rest of the display names)
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Image List'),
+      ),
+      body: ListView.builder(
+        itemCount: _displayNames.length,
+        itemBuilder: (BuildContext context, int index) {
+          return ListTile(
+            title: Text(_displayNames[index]),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ImageDetailScreen(
+                    imageName: _displayNames[index],
+                    index: index,
+                  ),
+                ),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+}
+
+// class ImageDetailScreen extends StatelessWidget {
+//   final String imageName;
+//   final int index;
+//
+//   ImageDetailScreen({required this.imageName, required this.index});
+//
+//   Future<List<String>> _retrieveImageUrls() async {
+//     firebase_storage.ListResult result =
+//     await firebase_storage.FirebaseStorage.instance.ref('images').listAll();
+//
+//     List<firebase_storage.Reference> allImages = result.items;
+//     List<String> imageUrls = [];
+//
+//     for (var imageRef in allImages) {
+//       String downloadURL = await imageRef.getDownloadURL();
+//       imageUrls.add(downloadURL);
+//     }
+//
+//     return imageUrls;
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text(imageName),
+//       ),
+//       body: FutureBuilder<List<String>>(
+//         future: _retrieveImageUrls(),
+//         builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
+//           if (snapshot.connectionState == ConnectionState.waiting) {
+//             return Center(child: CircularProgressIndicator());
+//           } else if (snapshot.hasError || !snapshot.hasData) {
+//             return Center(child: Text('Error loading images'));
+//           } else {
+//             return BookFlipAnimation(
+//               images: snapshot.data!,
+//               initialIndex: index,
+//               flex: 3,
+//               // You can adjust other properties of BookFlipAnimation here
+//             );
+//           }
+//         },
+//       ),
+//     );
+//   }
+// }
+
 class ImageGallryScreen extends StatefulWidget {
   @override
   _ImageGalleryScreenState createState() => _ImageGalleryScreenState();
